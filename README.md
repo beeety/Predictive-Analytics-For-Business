@@ -7,28 +7,29 @@ A home-goods manufacturer wants to predict expected profits from a catalog launc
 framework to work through the problem and build a linear regression model to provide results and a
 recommendation
 #### Predictive Techniques
-Linear Regression, Porblem Solving Framework
+* Linear Regression
+* Porblem Solving Framework
 
 ### Project: Create an Analytical Dataset
 #### Context
 A pet store chain is selecting the location for its next store. You will use data preparation techniques to build
 a robust analytic dataset and use it to build a predictive model to select the best location.
 #### Predictive Techniques
-Data Wrangling
+* Data Wrangling
 
 ### Project: Predict Loan Default Risk
 #### Context
 A bank recently received an influx of loan applications. You will build and apply a classification model to
 provide a recommendation on which loan applicants the bank should lend to.
 #### Predictive Techniques
-Classification Models
+* Classification Models
 
 ### Project: A/B Test a New Menu Launch
 #### Context
 A chain of coffee shops is considering launching a new menu. You will design and analyze an A/B test and
 write up a recommendation on whether the chain should introduce the new menu.
 #### Predictive Techniques
-A/B Testing
+* A/B Testing
 
 ### Project: Retail Chain Expansion
 #### Context
@@ -45,4 +46,6 @@ Task 3: Forecasting
 Fresh produce has a short life span, and due to increasing costs, the company wants to have an accurate monthly sales forecast.
 
 #### Predictive Techniques
-Segmentation and Clustering, Time Series Forecasting, Classification Model
+* Segmentation and Clustering
+* Time Series Forecasting
+* Classification Model
