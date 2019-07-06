@@ -1,0 +1,189 @@
+---
+title: "**Project 3 : Predict Default Risks**"
+author: "Jiawen"
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+## **Step 1:Business and Data Understanding**
+### **Key Decisions**
+#### 1.What decisions needs to be made?
+
+* We need to build the classification model with high accuracy in identifying whether the new loan applicants are creditworthy or not.
+
+ 
+#### 2.What data is needed to inform those decisions?
+* Variables : Explore the possible variables which imply the applicant’s financial stability, risk affordability and thus help evaluating the creditworthiness
+  * Applicant’s finance information, e.g. most valuable available asses, valuesaving stocks
+  * Applicant’s demographic information, e.g. age, length of current employment, duration in current address, number of dependents, whether is foreign worker or not
+  * Applicant’s credit-related information, e.g. duration of credit, payment status of previous credit, number of credits at this bank, credit amount
+  * Applicant’s loan request information, e.g. purpose
+* Training dataset: To build the model, we also need applicant’s credit application result within our training dataset
+* Testing dataset : we need the dataset including the above variables, and apply the
+data model which is trained by the training dataset to predict the credit results for the applicants
+
+
+#### 3.What kind of model (Continuous, Binary, Non-Binary, Time-Series) do we need to use to help make these decisions?
+* We need to build Binary Classification Model to make the business decision
+
+
+
+## **Step 2:Building the Training Set**
+### **Key Guidelines**
+#### **Attributes to evaluate while cleaning data**
+
+#### Correlation
+  * For numerical data fields, are there any fields that highly-correlate with each other? 
+  *The correlation should be at least .70 to be considered “high”
+  
+#### Missing Data
+  * Are there any missing data for each of the data fields? 
+  * Fields with a lot of missing data should be removed
+  
+#### Variability
+  * Are there only a few values in a subset of your data field? 
+  * Does the data field look very　uniform (there is only one value for the entire field?)
+  * This is called “low variability” and fields with low variability should be removed
+  
+### **Key Results**
+#### **Actions taken while cleaning the data**
+| Variable             | Actions | Reason                                                     |
+| --------------------:|---------:| ---------------------------------------------------------:|
+| Duration-in-Current-address     | Remove | 69% missing data |
+| Guarantors      | Remove     |   Low Variability |
+| No-of-Credits-at-this-Bank | Remove      |    Low Variability |
+| Foreign-Worker     | Remove | Low Variability |
+| Occupation      | Remove     |   Low Variability |
+| Telephone | Remove      |    Low Variability |
+| Age-years | Impute            |  Impute with the median since there are only ~2% missing data|  
+
+
+
+
+![](3-1.jpg){ width=50% }![](3-2.jpg){ width=50% }  
+
+
+## **Step 3:Train your Classification Models**
+####  **Understand model's key predictors**
+#### Model 1 : Logistic Regression Model
+* Most Significant Predictors : Account Balance_Some Balnce, p-value=1.65e-07
+  
+  
+  
+![](3-1.png){ width=50% }
+
+#### Model 2 : Decision Tree Model
+* Most Significant Predictors : Account Balance
+
+
+
+![](3-2.png){ width=50% }![](3-3.png){ width=50% } 
+
+#### Model 3 : Random Forest Model
+* Most Significant Predictors : Credit Amount
+
+
+
+![](3-4.png){ width=50% }
+
+#### Model 4 : Boosted Model
+* Most Significant Predictors :Account Balance
+
+
+
+![](3-5.png){ width=50% }
+
+  
+#### **Validate models against the validation set**
+#### Model 1 : Logistic Regression Model
+* Overall Percent Accuracy=0.7867
+* Confusion Matrix
+
+
+
+![](3-8.png){ width=50% }
+
+
+
+* Predictions Bias
+  * There is bias seen in the model's prediction to Creditworthy
+  \[PPV= True Positives(TruePositives + FalsePositives)= 0.80\]
+  \[NPV= TrueNegatives(TrueNegatives + FalseNegatives) =0.63\]
+
+#### Model 2 : Decision Tree Model
+* Overall Percent Accuracy=0.6867
+* Confusion Matrix
+
+
+
+![](3-9.png){ width=50% }
+
+
+
+
+* Predictions Bias
+  * There is bias seen in the model's prediction to Creditworthy
+  \[PPV= True Positives(TruePositives + FalsePositives)= 0.75\]
+  \[NPV= TrueNegatives(TrueNegatives + FalseNegatives) =0.47\]
+
+
+#### Model 3 : Random Forest Model
+* Overall Percent Accuracy=0.8000
+* Confusion Matrix
+
+
+
+![](3-10.png){ width=50% }
+
+
+
+* Predictions Bias
+  * There is no bias seen in the model
+  \[PPV= True Positives(TruePositives + FalsePositives)= 0.79\]
+  \[NPV= TrueNegatives(TrueNegatives + FalseNegatives) =0.86\]
+
+#### Model 4 : Boosted Model
+* Overall Percent Accuracy=0.7867
+* Confusion Matrix
+
+
+
+![](3-8.png){ width=50% }
+
+
+
+* Predictions Bias
+  * There is no bias seen in the model
+  \[PPV= True Positives(TruePositives + FalsePositives)= 0.78\]
+  \[NPV= TrueNegatives(TrueNegatives + FalseNegatives) =0.81\]
+
+## **Step 4:Recommendations**
+### Model Comparison
+#### Finally, I chose the Random Forest Model (Risk_FM) for the following reasons
+* Overall Accuracy is high
+  * It has the highest overall accuracy=0.8133, and there are also other considerations
+* Accuracies within “Creditworthy” and “Non-Creditworthy” segments are high
+  * “Creditworth" segment : Ranks the first in accuracy (0.9714)
+  * “Non-Creditworthy” segment : Ranks the second in accuracy (0.4444)
+
+
+<center>
+![](3-12.png){ width=50% }
+</center>
+
+
+* ROC graph curve is steep
+  * Random Forest Model ranksthe second in terms of the height of ROC curve
+  * Note : The highest ROC indicates “for a given amount of false positive predictions
+(wrongly predicted creditworthy people), this model will give the best number of true
+positive predictions (correctly predicted creditworthy people)”
+
+
+<center>
+![](3-13.png){ width=50% }
+</center>
+
+
+### **Appendix : Alteryx Workflow**
+![](3-14.png)
